@@ -22,21 +22,19 @@ namespace Blogger.Pages.Admin.BlogPosts
         [BindProperty]
         public BlogPost PostToEdit { get; set; }
 
-
-
-        public void OnGet(int id)
+        public async Task OnGet(int id)
         {
-            PostToEdit = _dbContext.BlogPost.Find(id);
+            PostToEdit = await _dbContext.BlogPost.FindAsync(id);
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var post = _dbContext.BlogPost.Find(PostToEdit.Id);
+            var post = await _dbContext.BlogPost.FindAsync(PostToEdit.Id);
 
             if (post != null)
             {
@@ -50,7 +48,7 @@ namespace Blogger.Pages.Admin.BlogPosts
                 post.Author = PostToEdit.Author;
                 post.Visible = PostToEdit.Visible;
 
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
 
             return RedirectToPage("/Admin/BlogPosts/List");

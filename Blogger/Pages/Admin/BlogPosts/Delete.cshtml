@@ -1,0 +1,18 @@
+﻿@page "{id:int}"
+@model Blogger.Pages.Admin.BlogPosts.DeleteModel
+@{
+    ViewData["Title"] = "Usuń post";
+}
+
+<h2>Usuń post</h2>
+
+<h3>Czy na pewno chcesz usunąć post?</h3>
+<div>
+    <strong>Tytuł:</strong> @Model.Post.Heading
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="Post.Id" />
+    <button type="submit" class="btn btn-danger m-lg-1">Usuń</button>
+    <a asp-page="/Admin/BlogPosts/List" class="btn btn-secondary">Anuluj</a>
+</form>

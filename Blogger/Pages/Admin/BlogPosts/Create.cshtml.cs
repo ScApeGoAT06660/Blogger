@@ -25,7 +25,7 @@ namespace Blogger.Pages.Admin.BlogPosts
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -34,8 +34,8 @@ namespace Blogger.Pages.Admin.BlogPosts
 
             var blogpost = _mapper.Map<BlogPost>(CreateBlogPost);
 
-            _dbContext.BlogPost.Add(blogpost);
-            _dbContext.SaveChanges();
+            await _dbContext.BlogPost.AddAsync(blogpost);
+            await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("/Admin/BlogPosts/List");
         }

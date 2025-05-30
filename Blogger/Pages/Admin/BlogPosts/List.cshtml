@@ -20,7 +20,9 @@
 				<tr>
 					<td>@post.Id</td>
 					<td>@post.Heading</td>
-					<td><a href="/Admin/BlogPosts/Edit/@post.Id">Edit</a></td>
+					<td><a href="/Admin/BlogPosts/Edit/@post.Id" class="btn btn-primary">Edit</a>
+						<a href="/Admin/BlogPosts/Delete/@post.Id" class="btn btn-danger">Delete</a>
+					</td>
 				</tr>
 			}
 		</tbody>
