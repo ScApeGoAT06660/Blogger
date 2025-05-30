@@ -1,0 +1,28 @@
+﻿@page
+@model Blogger.Pages.Admin.BlogPosts.ListModel
+@{
+}
+
+<h1>Add New Post</h1>
+
+<div class="container">
+	<table class="table">
+		<thead>
+			<tr>
+				<td>Id</td>
+				<td>Heading</td>
+				<td> </td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var post in Model.Posts)
+			{
+				<tr>
+					<td>@post.Id</td>
+					<td>@post.Heading</td>
+					<td><a href="/Admin/BlogPosts/Edit/@post.Id">Edit</a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
