@@ -28,3 +28,23 @@
 		</tbody>
 	</table>
 </div>
+
+@section Scripts {
+	<script>
+		toastr.options = {
+			"closeButton": true,
+			"progressBar": true,
+			"positionClass": "toast-bottom-right"
+		};
+
+		@if (TempData["SuccessMessage"] != null)
+		{
+			<text>toastr.success("@TempData["SuccessMessage"]");</text>
+		}
+
+		@if (TempData["ErrorMessage"] != null)
+		{
+			<text>toastr.error("@TempData["ErrorMessage"]");</text>
+		}
+	</script>
+}

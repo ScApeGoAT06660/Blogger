@@ -2,6 +2,7 @@ using AutoMapper;
 using Blogger.Data;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
+using Blogger.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,13 +13,13 @@ namespace Blogger.Pages.Admin.BlogPosts
         [BindProperty]
         public BlogPostDto CreateBlogPost { get; set; }
 
-        private readonly BloggerDBContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IBlogPostRepository _blogPostRepository;
 
-        public CreateModel(BloggerDBContext dBContext, IMapper mapper)
+        public CreateModel(IMapper mapper, IBlogPostRepository blogPostRepository)
         {
-            _dbContext = dBContext;
             _mapper = mapper;
+            _blogPostRepository = blogPostRepository;
         }
 
         public void OnGet()
@@ -29,13 +30,15 @@ namespace Blogger.Pages.Admin.BlogPosts
         {
             if (!ModelState.IsValid)
             {
+                TempData["ErrorMessage"] = "Something went wrong while creating the post.";
                 return Page();
             }
 
             var blogpost = _mapper.Map<BlogPost>(CreateBlogPost);
 
-            await _dbContext.BlogPost.AddAsync(blogpost);
-            await _dbContext.SaveChangesAsync();
+            await _blogPostRepository.Create(blogpost);
+
+            TempData["SuccessMessage"] = "Post created successfully!";
 
             return RedirectToPage("/Admin/BlogPosts/List");
         }

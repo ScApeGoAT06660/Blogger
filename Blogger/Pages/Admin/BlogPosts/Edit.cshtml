@@ -7,6 +7,7 @@
 
 <div class="container">
 	<form method="post">
+		<input type="hidden" asp-for="PostToEdit.Id" />
 		<div class="mb-3">
 			<label for="heading" class="form-label">Heading</label>
 			<input type="text" class="form-control" id="heading" asp-for="PostToEdit.Heading">
@@ -40,8 +41,8 @@
 			<input type="text" class="form-control" id="author" asp-for="PostToEdit.Author">
 		</div>
 		<div class="form-check mb-3">
-			<input class="form-check-input" type="checkbox" value="" id="isVisible">
-			<label class="form-check-label" for="isVisible" asp-for="PostToEdit.Visible">
+			<input class="form-check-input" type="checkbox" asp-for="PostToEdit.Visible" />
+			<label class="form-check-label" asp-for="PostToEdit.Visible">
 				IsVisible
 			</label>
 		</div>
@@ -50,3 +51,18 @@
 		</div>
 	</form>
 </div>
+
+@section Scripts {
+	<script>
+		toastr.options = {
+			"closeButton": true,
+			"progressBar": true,
+			"positionClass": "toast-bottom-right"
+		};
+
+		@if (TempData["ErrorMessage"] != null)
+		{
+			<text>toastr.error("@TempData["ErrorMessage"]");</text>
+		}
+	</script>
+}

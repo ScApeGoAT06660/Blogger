@@ -40,8 +40,8 @@
 			<input type="text" class="form-control" id="author" asp-for="CreateBlogPost.Author">
 		</div>
 		<div class="form-check mb-3">
-			<input class="form-check-input" type="checkbox" value="" id="isVisible">
-			<label class="form-check-label" for="isVisible" asp-for="CreateBlogPost.Visible">
+			<input class="form-check-input" type="checkbox" asp-for="CreateBlogPost.Visible" />
+			<label class="form-check-label" asp-for="CreateBlogPost.Visible">
 				IsVisible
 			</label>
 		</div>
@@ -50,3 +50,18 @@
 		</div>
 	</form>
 </div>
+
+@section Scripts {
+	<script>
+		toastr.options = {
+			"closeButton": true,
+			"progressBar": true,
+			"positionClass": "toast-bottom-right"
+		};
+
+		@if (TempData["ErrorMessage"] != null)
+		{
+			<text>toastr.error("@TempData["ErrorMessage"]");</text>
+		}
+	</script>
+}

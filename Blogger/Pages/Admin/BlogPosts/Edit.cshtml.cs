@@ -2,6 +2,7 @@ using AutoMapper;
 using Blogger.Data;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
+using Blogger.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,46 +11,32 @@ namespace Blogger.Pages.Admin.BlogPosts
 {
     public class EditModel : PageModel
     {
-        private readonly BloggerDBContext _dbContext;
-        private readonly IMapper _mapper;
-
-        public EditModel(BloggerDBContext dbcontext, IMapper mapper)
-        {
-            _dbContext = dbcontext;
-            _mapper = mapper;
-        }
-
         [BindProperty]
         public BlogPost PostToEdit { get; set; }
 
+        private readonly IBlogPostRepository _blogPostRepository;
+
+        public EditModel(IBlogPostRepository blogPostRepository)
+        {
+            _blogPostRepository = blogPostRepository;
+        }      
+
         public async Task OnGet(int id)
         {
-            PostToEdit = await _dbContext.BlogPost.FindAsync(id);
+            PostToEdit = await _blogPostRepository.GetPostById(id);
         }
 
         public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
+                TempData["ErrorMessage"] = "Something went wrong while editing the post.";
                 return Page();
             }
 
-            var post = await _dbContext.BlogPost.FindAsync(PostToEdit.Id);
+            await _blogPostRepository.Update(PostToEdit);
 
-            if (post != null)
-            {
-                post.Heading = PostToEdit.Heading;
-                post.PageTitle = PostToEdit.PageTitle;
-                post.Content = PostToEdit.Content;
-                post.ShortDescription = PostToEdit.ShortDescription;
-                post.FeatureImageUrl = PostToEdit.FeatureImageUrl;
-                post.UrlHandle = PostToEdit.UrlHandle;
-                post.PublishedDate = PostToEdit.PublishedDate;
-                post.Author = PostToEdit.Author;
-                post.Visible = PostToEdit.Visible;
-
-                await _dbContext.SaveChangesAsync();
-            }
+            TempData["SuccessMessage"] = "Post edited successfully!";
 
             return RedirectToPage("/Admin/BlogPosts/List");
         }                
