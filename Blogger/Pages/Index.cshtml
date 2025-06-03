@@ -4,7 +4,42 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-5 py5">
+        <div class="col-12 col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Blogger - Test Blog </h1>
+            <p class="lead">Ta strona jest częścią mojego portfolio :)</p>
+        </div>
+        <div class="col-12 col-lg-6">
+            <img src="https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="d-block mx-lg-auto img-fluid" width="400"/>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h2 class="mb-5 display-3">Posts</h2>
+            @if (Model.Posts != null && Model.Posts.Any())
+            {
+                foreach (var item in Model.Posts)
+                {
+                    <div class="mb-5 bg-light box-shadow">
+                        <img src="@item.FeatureImageUrl" class="mb-2 d-block img-fluid" />
+                        <div class="px-4 py-4">
+                            <h2 class="mb-2">@item.Heading</h2>
+                            <p>
+                                Author: @item.Author
+                                <br />
+                                Date Published: @item.PublishedDate.ToShortDateString()
+                            </p>
+                            <p class="mb-2">@item.ShortDescription</p>
+                            <a href="/blog/@item.UrlHandle" class="btn btn-dark">Read More</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>

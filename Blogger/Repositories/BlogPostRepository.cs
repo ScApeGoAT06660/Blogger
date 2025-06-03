@@ -33,13 +33,27 @@ namespace Blogger.Repositories
 
         public async Task<IEnumerable<BlogPost>> GetAllPosts()
         {
-            var posts = await _dbContext.BlogPost.ToListAsync(); 
+            var posts = await _dbContext.BlogPost
+                .Include(p => p.Tags)
+                .ToListAsync(); 
             return posts;
         }
 
         public async Task<BlogPost> GetPostById(int id)
         {
-            var post = await _dbContext.BlogPost.FirstOrDefaultAsync(p => p.Id == id);
+            var post = await _dbContext.BlogPost
+                .Include(p => p.Tags)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            return post;
+        }
+
+        public async Task<BlogPost> GetPostByUrl(string urlHandle)
+        {
+            var post = await _dbContext.BlogPost
+            .Include(p => p.Tags)
+            .FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+
             return post;
         }
 
@@ -56,6 +70,7 @@ namespace Blogger.Repositories
             postToEdit.PublishedDate = post.PublishedDate;
             postToEdit.Author = post.Author;
             postToEdit.Visible = post.Visible;
+            postToEdit.Tags = post.Tags;
 
             await _dbContext.SaveChangesAsync();
 

@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 builder.Services.AddDbContext<BloggerDBContext>
     (options => options.UseSqlServer

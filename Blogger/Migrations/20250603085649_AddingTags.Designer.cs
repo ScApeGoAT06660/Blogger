@@ -4,6 +4,7 @@ using Blogger.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogger.Migrations
 {
     [DbContext(typeof(BloggerDBContext))]
-    partial class BloggerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250603085649_AddingTags")]
+    partial class AddingTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +80,7 @@ namespace Blogger.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BlogPostId")
+                    b.Property<int>("BlogPostId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -95,7 +98,9 @@ namespace Blogger.Migrations
                 {
                     b.HasOne("Blogger.Models.BlogPost", "BlogPost")
                         .WithMany("Tags")
-                        .HasForeignKey("BlogPostId");
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BlogPost");
                 });

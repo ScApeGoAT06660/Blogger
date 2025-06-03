@@ -13,17 +13,19 @@ namespace Blogger.Pages.Admin.BlogPosts
         [BindProperty]
         public BlogPostDto CreateBlogPost { get; set; }
 
+        [BindProperty]
+        public string Tags { get; set; }
+
         private readonly IMapper _mapper;
         private readonly IBlogPostRepository _blogPostRepository;
+
+        //[BindProperty]
+        //public IFormFile Image { get; set; }
 
         public CreateModel(IMapper mapper, IBlogPostRepository blogPostRepository)
         {
             _mapper = mapper;
             _blogPostRepository = blogPostRepository;
-        }
-
-        public void OnGet()
-        {
         }
 
         public async Task<IActionResult> OnPost()
@@ -34,7 +36,10 @@ namespace Blogger.Pages.Admin.BlogPosts
                 return Page();
             }
 
+            var tagsCollection = new List<Tag>(Tags.Split('#').Select(x => new Tag() { Name = x.Trim() }));
+
             var blogpost = _mapper.Map<BlogPost>(CreateBlogPost);
+            blogpost.Tags = tagsCollection;
 
             await _blogPostRepository.Create(blogpost);
 
