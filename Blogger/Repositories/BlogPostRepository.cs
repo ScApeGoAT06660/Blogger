@@ -39,6 +39,16 @@ namespace Blogger.Repositories
             return posts;
         }
 
+        public async Task<IEnumerable<BlogPost>> GetAllPosts(string tagName)
+        {
+            var posts = await (_dbContext.BlogPost
+                .Include(p => p.Tags)
+                .Where(x => x.Tags.Any(x=>x.Name == tagName)))
+                .ToListAsync();
+
+            return posts;
+        }
+
         public async Task<BlogPost> GetPostById(int id)
         {
             var post = await _dbContext.BlogPost

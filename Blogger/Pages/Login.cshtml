@@ -1,0 +1,49 @@
+﻿@page
+@model Blogger.Pages.LoginModel
+@{
+}
+
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+
+            <h1 class="mb-3 h3">Register</h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label" for="Email">Email</label>
+                    <input type="text" class="form-control" asp-for="Login.Name" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Password">Password</label>
+                    <input type="password" class="form-control" asp-for="Login.Password" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right"
+        };
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success("@TempData["SuccessMessage"]");</text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error("@TempData["ErrorMessage"]");</text>
+        }
+    </script>
+}

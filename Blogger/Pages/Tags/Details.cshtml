@@ -1,0 +1,32 @@
+﻿@page "/tags/{tagName}"
+@model Blogger.Pages.Tags.DetailsModel
+@{
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h2 class="mb-3 display-3"></h2>
+
+            @if (Model.Posts != null && Model.Posts.Any())
+            {
+                foreach (var item in Model.Posts)
+                {
+                    <div class="mb-5 bg-light box-shadow">
+                        <img src="@item.FeatureImageUrl" class="mb-2 d-block img-fluid" />
+                        <div class="px-4 py-4">
+                            <h2 class="mb-2">@item.Heading</h2>
+                            <p>
+                                Author: @item.Author
+                                <br />
+                                Date Published: @item.PublishedDate.ToShortDateString()
+                            </p>
+                            <p class="mb-2">@item.ShortDescription</p>
+                            <a href="/blog/@item.UrlHandle" class="btn btn-dark">Read More</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

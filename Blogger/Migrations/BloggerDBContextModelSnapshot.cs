@@ -66,7 +66,7 @@ namespace Blogger.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogPost");
+                    b.ToTable("BlogPost", (string)null);
                 });
 
             modelBuilder.Entity("Blogger.Models.Tag", b =>
@@ -88,7 +88,7 @@ namespace Blogger.Migrations
 
                     b.HasIndex("BlogPostId");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tag", (string)null);
                 });
 
             modelBuilder.Entity("Blogger.Models.Tag", b =>

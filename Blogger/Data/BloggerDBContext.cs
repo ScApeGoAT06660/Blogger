@@ -5,7 +5,7 @@ namespace Blogger.Data
 {
     public class BloggerDBContext : DbContext
     {
-        public BloggerDBContext(DbContextOptions options) : base(options)
+        public BloggerDBContext(DbContextOptions<BloggerDBContext> options) : base(options)
         {
         }
 
