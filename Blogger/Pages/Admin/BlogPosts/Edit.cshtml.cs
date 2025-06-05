@@ -3,12 +3,14 @@ using Blogger.Data;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
 using Blogger.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Pages.Admin.BlogPosts
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         [BindProperty]

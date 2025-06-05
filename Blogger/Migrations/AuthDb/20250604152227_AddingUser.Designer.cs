@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogger.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20250604150323_AddAdminUser")]
-    partial class AddAdminUser
+    [Migration("20250604152227_AddingUser")]
+    partial class AddingUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,12 @@ namespace Blogger.Migrations.AuthDb
                             Id = "f9b16c62-86a2-4ae2-98b4-35a0b82440a1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "7e5c27a7-4679-40cb-b2f4-ec25518f7506",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 

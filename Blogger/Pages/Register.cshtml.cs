@@ -20,27 +20,34 @@ namespace Blogger.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             var user = new IdentityUser
             {
                 UserName = Register.Name,
                 Email = Register.Email
             };
 
-
             var identityResult = await _userManager.CreateAsync(user, Register.Password);
 
             if (identityResult.Succeeded)
             {
-                TempData["SuccessMessage"] = "Account created successfully!";
+                var addRoleResult = await _userManager.AddToRoleAsync(user, "User");
 
-                return RedirectToPage("/Index");
+                if (addRoleResult.Succeeded)
+                {
+                    TempData["SuccessMessage"] = "Account created successfully!";
+
+                    return RedirectToPage("/Index");
+                }              
             }
 
             TempData["ErrorMessage"] = "Something went wrong while creating the account.";
 
             return Page();
         }
-
-
     }
 }

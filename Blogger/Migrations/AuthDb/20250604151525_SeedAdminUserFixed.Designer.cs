@@ -4,6 +4,7 @@ using Blogger.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogger.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250604151525_SeedAdminUserFixed")]
+    partial class SeedAdminUserFixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,12 +57,6 @@ namespace Blogger.Migrations.AuthDb
                             Id = "f9b16c62-86a2-4ae2-98b4-35a0b82440a1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "7e5c27a7-4679-40cb-b2f4-ec25518f7506",
-                            Name = "User",
-                            NormalizedName = "USER"
                         });
                 });
 
@@ -151,6 +148,24 @@ namespace Blogger.Migrations.AuthDb
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e32588d5-84d5-4423-940a-77f8b23edb8b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2282952a-293c-4e7c-b9e0-8e95ec15ead2",
+                            Email = "admin@bloggie.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@BLOGGIE.COM",
+                            NormalizedUserName = "ADMIN@BLOGGIE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEU7vxejBzfSgXs35j54Ik2Fxhs1oyqryrY0sfpGTUiPHVWzxcZw2vg4X4DuTF6AdQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "cfeb3e90-a12e-4e5d-9c7e-2c1a3f63db4b",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@bloggie.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -213,6 +228,13 @@ namespace Blogger.Migrations.AuthDb
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "e32588d5-84d5-4423-940a-77f8b23edb8b",
+                            RoleId = "f9b16c62-86a2-4ae2-98b4-35a0b82440a1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

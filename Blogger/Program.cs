@@ -3,6 +3,7 @@ using Blogger.Data;
 using Blogger.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 
 // DbContexts
 builder.Services.AddDbContext<BloggerDBContext>(options =>
@@ -38,6 +40,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 
 });
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login";       
+    options.AccessDeniedPath = "/Login";
+});
+
 
 // Cookie settings 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -66,5 +75,11 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedData.EnsureSeededAsync(services);
+}
 
 app.Run();

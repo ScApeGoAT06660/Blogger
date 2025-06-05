@@ -1,12 +1,14 @@
 using Blogger.Data;
 using Blogger.Models;
 using Blogger.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Pages.Admin.BlogPosts
 {
+    [Authorize(Roles = "Admin")]
     public class ListModel : PageModel
     {
         public IEnumerable<BlogPost> Posts { get; set; }

@@ -11,5 +11,6 @@ namespace Blogger.Data
 
         public DbSet<BlogPost> BlogPost { get; set; }
         public DbSet<Tag> Tag { get; set; }
+        public DbSet<Like> Like { get; set; }
     }
 }

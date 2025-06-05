@@ -17,12 +17,16 @@ namespace Blogger.Pages
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(string ReturnUrl)
         {
             var signInResult = await _userManager.PasswordSignInAsync(Login.Name, Login.Password, false, false);
 
             if (signInResult.Succeeded)
             {
+                if (!string.IsNullOrEmpty(ReturnUrl))
+                {
+                    return Redirect(ReturnUrl);
+                }
                 return RedirectToPage("/Index");
             }
 

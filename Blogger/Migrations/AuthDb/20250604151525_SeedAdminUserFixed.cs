@@ -5,7 +5,7 @@
 namespace Blogger.Migrations.AuthDb
 {
     /// <inheritdoc />
-    public partial class AddAdminUser : Migration
+    public partial class SeedAdminUserFixed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

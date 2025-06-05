@@ -1,5 +1,9 @@
 ﻿@page "/blog/{urlHandle}"
 @model Blogger.Pages.Blog.DetailsModel
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> _userManager
+
 @{
     ViewData["Title"] = Model.Post.PageTitle;
 }
@@ -15,6 +19,15 @@
                     <span class="text-secondary">@Model.Post.Author</span>
                     <span class="text-secondary">@Model.Post.PublishedDate.ToShortDateString()</span>
                 </div>
+
+                <div class="mb-3">
+                    <a id="btnLike" style="cursor: pointer;">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                    </a>
+                    <span id="likeCount">@Model.Likes.ToString() likes</span>
+
+                </div>
+
 
                 <div class="mb-3">
                     @if (Model.Post.Tags != null)
@@ -39,3 +52,38 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+    <script>
+        const btnLike = document.getElementById('btnLike');
+        const likeCount = document.getElementById('likeCount');
+        const blogPostId = @Model.Post.Id;
+
+        async function addLikeForBlog() {
+            const response = await fetch('/api/Likes/Add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*'
+                },
+                body: JSON.stringify({ BlogPostId: blogPostId })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                likeCount.textContent = `${data.totalLikes} likes`;
+            } else if (response.status === 401) {
+                alert("Musisz być zalogowany, aby polubić post.");
+                window.location.href = "/Login";
+            } else {
+                const errorText = await response.text();
+                console.error("Błąd dodawania lajka:", response.status, errorText);
+            }
+        }
+
+        btnLike.addEventListener('click', addLikeForBlog);
+    </script>
+}
+
+
