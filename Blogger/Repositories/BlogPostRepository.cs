@@ -1,5 +1,6 @@
 ﻿using Blogger.Data;
 using Blogger.Models;
+using Blogger.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Repositories

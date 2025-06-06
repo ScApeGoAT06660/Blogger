@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using Blogger.Repositories.Interfaces;
+using CloudinaryDotNet;
 
 namespace Blogger.Repositories
 {

@@ -2,11 +2,13 @@ using AutoMapper;
 using Blogger.Data;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
-using Blogger.Repositories;
+using Blogger.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blogger.Pages.Admin.BlogPosts
 {
@@ -14,23 +16,26 @@ namespace Blogger.Pages.Admin.BlogPosts
     public class EditModel : PageModel
     {
         [BindProperty]
-        public BlogPost PostToEdit { get; set; }
+        public EditPost PostToEdit { get; set; }
 
         [BindProperty]
         public string Tags { get; set; }
 
         private readonly IBlogPostRepository _blogPostRepository;
+        private readonly IMapper _mapper;
 
-        public EditModel(IBlogPostRepository blogPostRepository)
+        public EditModel(IBlogPostRepository blogPostRepository, IMapper mapper)
         {
             _blogPostRepository = blogPostRepository;
+            _mapper = mapper;
         }      
 
         public async Task OnGet(int id)
         {
-            PostToEdit = await _blogPostRepository.GetPostById(id);
-            Tags = string.Join(" ", PostToEdit.Tags.Select(t => $"#{t.Name}"));
+            var post = await _blogPostRepository.GetPostById(id);
+            PostToEdit = _mapper.Map<EditPost>(post);
 
+            Tags = string.Join(" ", post.Tags.Select(t => $"#{t.Name}"));
         }
 
         public async Task<IActionResult> OnPost()
@@ -46,9 +51,10 @@ namespace Blogger.Pages.Admin.BlogPosts
             .Select(x => new Tag { Name = x.Trim() })
             .ToList();
 
-            PostToEdit.Tags = tagsCollection;
+            var editedPost = _mapper.Map<BlogPost>(PostToEdit);
+            editedPost.Tags = tagsCollection;
 
-            await _blogPostRepository.Update(PostToEdit);
+            await _blogPostRepository.Update(editedPost);
 
             TempData["SuccessMessage"] = "Post edited successfully!";
 

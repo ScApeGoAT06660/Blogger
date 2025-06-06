@@ -1,4 +1,4 @@
-﻿using Blogger.Repositories;
+﻿using Blogger.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

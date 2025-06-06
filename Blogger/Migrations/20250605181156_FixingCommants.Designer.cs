@@ -4,6 +4,7 @@ using Blogger.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blogger.Migrations
 {
     [DbContext(typeof(BloggerDBContext))]
-    partial class BloggerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250605181156_FixingCommants")]
+    partial class FixingCommants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,7 +72,7 @@ namespace Blogger.Migrations
                     b.ToTable("BlogPost");
                 });
 
-            modelBuilder.Entity("Blogger.Models.Comment", b =>
+            modelBuilder.Entity("Blogger.Models.Commant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +98,7 @@ namespace Blogger.Migrations
 
                     b.HasIndex("BlogPostId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Commant");
                 });
 
             modelBuilder.Entity("Blogger.Models.Like", b =>
@@ -142,7 +145,7 @@ namespace Blogger.Migrations
                     b.ToTable("Tag");
                 });
 
-            modelBuilder.Entity("Blogger.Models.Comment", b =>
+            modelBuilder.Entity("Blogger.Models.Commant", b =>
                 {
                     b.HasOne("Blogger.Models.BlogPost", null)
                         .WithMany("Commants")

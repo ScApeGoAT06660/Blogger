@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Blogger.Data;
 using Blogger.Models;
+using Blogger.Repositories.Interfaces;
 
 namespace Blogger.Repositories
 {

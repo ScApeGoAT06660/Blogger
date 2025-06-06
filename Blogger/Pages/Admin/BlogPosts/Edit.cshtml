@@ -10,19 +10,23 @@
 		<input type="hidden" asp-for="PostToEdit.Id" />
 		<div class="mb-3">
 			<label for="heading" class="form-label">Heading</label>
-			<input type="text" class="form-control" id="heading" asp-for="PostToEdit.Heading">
+			<input type="text" class="form-control" id="heading" asp-for="PostToEdit.Heading" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.Heading"></span>
 		</div>
 		<div class="mb-3">
 			<label for="pageTitle" class="form-label">Page Title</label>
-			<input type="text" class="form-control" id="pageTitle" asp-for="PostToEdit.PageTitle">
+			<input type="text" class="form-control" id="pageTitle" asp-for="PostToEdit.PageTitle" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.PageTitle"></span>
 		</div>
 		<div class="mb-3">
 			<label for="content" class="form-label">Content</label>
-			<textarea class="form-control" id="content" asp-for="PostToEdit.Content"></textarea>
+			<textarea class="form-control" id="content" asp-for="PostToEdit.Content" required></textarea>
+			<span class="text-danger" asp-validation-for="PostToEdit.Content"></span>
 		</div>
 		<div class="mb-3">
 			<label for="shortDescription" class="form-label">Short Description</label>
-			<input type="text" class="form-control" id="shortDescription" asp-for="PostToEdit.ShortDescription">
+			<input type="text" class="form-control" id="shortDescription" asp-for="PostToEdit.ShortDescription" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.ShortDescription"></span>
 		</div>
 		<div class="mb-3">
 			<label for="featuredImageUpload" class="form-label">Image Upload</label>
@@ -38,23 +42,28 @@
 		</div>
 		<div class="mb-3">
 			<label for="featuredImageUrl" class="form-label">ImageUrl</label>
-			<input type="text" class="form-control" id="featuredImageUrl" asp-for="PostToEdit.FeatureImageUrl">
+			<input type="text" class="form-control" id="featuredImageUrl" asp-for="PostToEdit.FeatureImageUrl" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.FeatureImageUrl"></span>
 		</div>
 		<div class="mb-3">
 			<label for="urlHandle" class="form-label">Url Handle</label>
-			<input type="text" class="form-control" id="urlHandle" asp-for="PostToEdit.UrlHandle">
+			<input type="text" class="form-control" id="urlHandle" asp-for="PostToEdit.UrlHandle" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.UrlHandle"></span>
 		</div>
 		<div class="mb-3">
 			<label for="publishedDate" class="form-label">Published Date</label>
-			<input type="date" class="form-control" id="publishedDate" asp-for="PostToEdit.PublishedDate">
+			<input type="date" class="form-control" id="publishedDate" asp-for="PostToEdit.PublishedDate" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.PublishedDate"></span>
 		</div>
 		<div class="mb-3">
 			<label for="author" class="form-label">Author</label>
-			<input type="text" class="form-control" id="author" asp-for="PostToEdit.Author">
+			<input type="text" class="form-control" id="author" asp-for="PostToEdit.Author" required>
+			<span class="text-danger" asp-validation-for="PostToEdit.Author"></span>
 		</div>
 		<div class="mb-3">
 			<label for="" class="form-label">Tags (# separated)</label>
-			<input type="text" class="form-control" id="tags" asp-for="Tags"/>
+			<input type="text" class="form-control" id="tags" name="Tags" value="@Model.Tags" />
+
 		</div>
 		<div class="form-check mb-3">
 			<input class="form-check-input" type="checkbox" asp-for="PostToEdit.Visible" />

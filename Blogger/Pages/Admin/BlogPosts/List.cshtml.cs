@@ -1,6 +1,6 @@
 using Blogger.Data;
 using Blogger.Models;
-using Blogger.Repositories;
+using Blogger.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

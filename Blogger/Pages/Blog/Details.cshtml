@@ -3,16 +3,15 @@
 
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> _userManager
-
-@{
-    ViewData["Title"] = Model.Post.PageTitle;
-}
+@inject SignInManager<IdentityUser> _signInManager
 
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6">
             @if (Model.Post != null)
             {
+                ViewData["Title"] = Model.Post.PageTitle;
+                
                 <h1 class="mb-3">@Model.Post.Heading</h1>
 
                 <div class="d-flex justify-content-between mb-3">
@@ -44,6 +43,50 @@
                 <div class="mb-3 blog-details">
                     @Html.Raw(Model.Post.Content)
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Comments</h5>
+
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <form method="post">
+                                <div class="mb-3">
+                                    <label class="form-label">Comment Description</label>
+                                    <input type="text" class="form-control" asp-for="CommentDescription" />
+                                    <span class="text-danger" asp-validation-for="CommentDescription"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-dark">Add Comment</button>
+                                    <input type="hidden" asp-for="PostId"/>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                        <div class="card-body">
+                          @if(Model.Comments != null && Model.Comments.Any())
+                          {
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div>
+                                            @comment.Description
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-secondary">@comment.Username</span>
+                                            <span class="text-secondary">@comment.DateAdded.ToShortDateString()</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                          }
+                          else
+                          {
+                              <p>There is no comments.</p>
+                          }
+                        </div>
+                </div>
             }
             else
             {
@@ -54,36 +97,39 @@
 </div>
 
 @section Scripts {
+    @if (Model.Post != null)
+    {
+        <script>
+            const btnLike = document.getElementById('btnLike');
+            const likeCount = document.getElementById('likeCount');
+            const blogPostId = @Model.Post.Id;
 
-    <script>
-        const btnLike = document.getElementById('btnLike');
-        const likeCount = document.getElementById('likeCount');
-        const blogPostId = @Model.Post.Id;
+            async function addLikeForBlog() {
+                const response = await fetch('/api/Likes/Add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': '*/*'
+                    },
+                    body: JSON.stringify({ BlogPostId: blogPostId })
+                });
 
-        async function addLikeForBlog() {
-            const response = await fetch('/api/Likes/Add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': '*/*'
-                },
-                body: JSON.stringify({ BlogPostId: blogPostId })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                likeCount.textContent = `${data.totalLikes} likes`;
-            } else if (response.status === 401) {
-                alert("Musisz być zalogowany, aby polubić post.");
-                window.location.href = "/Login";
-            } else {
-                const errorText = await response.text();
-                console.error("Błąd dodawania lajka:", response.status, errorText);
+                if (response.ok) {
+                    const data = await response.json();
+                    likeCount.textContent = `${data.totalLikes} likes`;
+                } else if (response.status === 401) {
+                    alert("You have to be log in to like the post.");
+                    window.location.href = "/Login";
+                } else {
+                    const errorText = await response.text();
+                    console.error("Error:", response.status, errorText);
+                }
             }
-        }
 
-        btnLike.addEventListener('click', addLikeForBlog);
-    </script>
+            btnLike.addEventListener('click', addLikeForBlog);
+        </script>
+    }
 }
+
 
 

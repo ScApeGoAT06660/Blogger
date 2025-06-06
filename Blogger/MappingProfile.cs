@@ -8,7 +8,8 @@ namespace Blogger
     {
         public MappingProfile()
         {
-            CreateMap<BlogPostDto, BlogPost>().ReverseMap();
+            CreateMap<CreatePost, BlogPost>().ReverseMap();
+            CreateMap<EditPost, BlogPost>().ReverseMap();
         }
     }
 }

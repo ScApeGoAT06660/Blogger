@@ -1,4 +1,4 @@
-﻿namespace Blogger.Repositories
+﻿namespace Blogger.Repositories.Interfaces
 {
     public interface IImageRepository
     {

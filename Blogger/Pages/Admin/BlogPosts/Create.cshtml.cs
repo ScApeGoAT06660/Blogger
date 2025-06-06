@@ -2,10 +2,11 @@ using AutoMapper;
 using Blogger.Data;
 using Blogger.Models;
 using Blogger.Models.ViewModels;
-using Blogger.Repositories;
+using Blogger.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blogger.Pages.Admin.BlogPosts
 {
@@ -13,9 +14,10 @@ namespace Blogger.Pages.Admin.BlogPosts
     public class CreateModel : PageModel
     {
         [BindProperty]
-        public BlogPostDto CreateBlogPost { get; set; }
+        public CreatePost CreateBlogPost { get; set; }
 
         [BindProperty]
+        [Required]
         public string Tags { get; set; }
 
         private readonly IMapper _mapper;

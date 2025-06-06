@@ -10,29 +10,38 @@ namespace Blogger.Pages
         private readonly SignInManager<IdentityUser> _userManager;
 
         [BindProperty]
-        public Register Login { get; set; }
+        public Login Login { get; set; }
 
         public LoginModel(SignInManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnPost(string ReturnUrl)
+        public async Task<IActionResult> OnPost(string? ReturnUrl)
         {
-            var signInResult = await _userManager.PasswordSignInAsync(Login.Name, Login.Password, false, false);
-
-            if (signInResult.Succeeded)
+            if (ModelState.IsValid) 
             {
-                if (!string.IsNullOrEmpty(ReturnUrl))
+                 var signInResult = await _userManager.PasswordSignInAsync(Login.Name, Login.Password, false, false);
+
+                if (signInResult.Succeeded)
                 {
-                    return Redirect(ReturnUrl);
+                    if (!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+                    return RedirectToPage("/Index");
                 }
-                return RedirectToPage("/Index");
+                else
+                {
+                    TempData["ErrorMessage"] = "Something went wrong while logging in.";
+                    return Page();
+                }
             }
-
-            TempData["ErrorMessage"] = "Something went wrong while logging in.";
-
-            return Page();
+            else
+            {
+                TempData["ErrorMessage"] = "Something went wrong while logging in.";
+                return Page();
+            }  
         }
     }
 }
