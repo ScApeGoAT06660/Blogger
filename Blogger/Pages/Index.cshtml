@@ -8,10 +8,15 @@
     <div class="row align-items-center g-5 py5">
         <div class="col-12 col-lg-6">
             <h1 class="display-5 fw-bold lh-1 mb-3">Blogger - Test Blog </h1>
-            <p class="lead">Ta strona jest częścią mojego portfolio :)</p>
+            <p class="lead">
+                Ta strona jest częścią mojego portfolio.
+                Link do repozytorium:
+                <a href="https://github.com/ScApeGoAT06660/Blogger" style="color: purple;" target="_blank">[link]</a>
+                .
+            </p>
         </div>
         <div class="col-12 col-lg-6">
-            <img src="https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="d-block mx-lg-auto img-fluid" width="400"/>
+            <img src="https://www.ibm.com/content/dam/adobe-cms/instana/media_logo/dotnetCore.png/_jcr_content/renditions/cq5dam.web.1280.1280.png" class="d-block mx-lg-auto img-fluid" width="400" />
         </div>
     </div>
 </div>
@@ -39,7 +44,7 @@
                 foreach (var item in Model.Posts)
                 {
                     <div class="mb-5 bg-light box-shadow">
-                        <img src="@item.FeatureImageUrl" class="mb-2 d-block img-fluid" />
+                        <img src="@item.FeatureImageUrl" class="mb-2 d-block img-fluid w-100" />
                         <div class="px-4 py-4">
                             <h2 class="mb-2">@item.Heading</h2>
                             <p>
