@@ -17,7 +17,6 @@ namespace Blogger.Pages.Admin.BlogPosts
         public CreatePost CreateBlogPost { get; set; }
 
         [BindProperty]
-        [Required]
         public string Tags { get; set; }
 
         private readonly IMapper _mapper;
